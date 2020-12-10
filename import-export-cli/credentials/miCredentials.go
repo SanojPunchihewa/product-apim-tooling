@@ -133,7 +133,7 @@ func RevokeAccessTokenForMI(env, token string) error {
 	}
 
 	if resp.StatusCode() != http.StatusOK {
-		return errors.New("Error logging out of the MI in " + env + "Status: " + resp.Status())
+		return errors.New("Error logging out of the MI in " + env + " Status: " + resp.Status())
 	}
 
 	return nil

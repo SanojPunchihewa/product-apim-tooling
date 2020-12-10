@@ -40,7 +40,7 @@ func AddEnv(envName string, envEndpoints *utils.EnvEndpoints, mainConfigFilePath
 		return errors.New("Name of the environment cannot be blank")
 	}
 
-	if envEndpoints.TokenEndpoint == "" {
+	if !utils.HasOnlyMIEndpoint(envEndpoints) && envEndpoints.TokenEndpoint == "" {
 		// If token endpoint string is empty,then assign the default value
 		if envEndpoints.ApiManagerEndpoint != "" && !isDefaultTokenEndpointSet {
 			isDefaultTokenEndpointSet = true

@@ -170,8 +170,12 @@ func (s *JsonStore) Erase(env string) error {
 	if !ok {
 		return fmt.Errorf("%s was not found", env)
 	}
-	environment.APIM = Credential{}
-	s.credentials.Environments[env] = environment
+	if onlyAPIMCredentials(environment.MI) {
+		delete(s.credentials.Environments, env)
+	} else {
+		environment.APIM = Credential{}
+		s.credentials.Environments[env] = environment
+	}
 	return s.persist()
 }
 
@@ -181,8 +185,12 @@ func (s *JsonStore) EraseMI(env string) error {
 	if !ok {
 		return fmt.Errorf("%s was not found", env)
 	}
-	environment.MI = MiCredential{}
-	s.credentials.Environments[env] = environment
+	if onlyMICredentials(environment.APIM) {
+		delete(s.credentials.Environments, env)
+	} else {
+		environment.MI = MiCredential{}
+		s.credentials.Environments[env] = environment
+	}
 	return s.persist()
 }
 
@@ -195,4 +203,12 @@ func (s *JsonStore) IsKeychainEnabled() bool {
 func (s *JsonStore) Has(env string) bool {
 	_, ok := s.credentials.Environments[env]
 	return ok
+}
+
+func onlyMICredentials(apimCred Credential) bool {
+	return apimCred.ClientId == "" && apimCred.ClientSecret == "" && apimCred.Username == "" && apimCred.Password == ""
+}
+
+func onlyAPIMCredentials(miCred MiCredential) bool {
+	return miCred.AccessToken == "" && miCred.Username == "" && miCred.Password == ""
 }
