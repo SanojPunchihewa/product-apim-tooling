@@ -19,6 +19,7 @@
 package utils
 
 import (
+	"encoding/csv"
 	"errors"
 	"fmt"
 	"io"
@@ -430,4 +431,34 @@ func WriteResponseToTempZip(zipFileName string, resp *resty.Response) (string, e
 		return "", err
 	}
 	return tempZipFile, err
+}
+
+// WriteLinesToCSVFile write the content of a 2D array as csv values to a file at the target path.
+func WriteLinesToCSVFile(lines [][]string, targetPath string) error {
+	if _, err := os.Stat(filepath.Dir(targetPath)); os.IsNotExist(err) {
+		return err
+	}
+
+	file, err := os.Create(targetPath)
+	if err != nil {
+		return errors.New("Could not create the file " + targetPath + ". " + err.Error())
+	}
+
+	defer func() error {
+		if e := file.Close(); e != nil {
+			return e
+		}
+		return nil
+	}()
+
+	csvWriter := csv.NewWriter(file)
+	defer csvWriter.Flush()
+
+	for _, line := range lines {
+		err := csvWriter.Write(line)
+		if err != nil {
+			return errors.New("Could not write to file " + targetPath + ". " + err.Error())
+		}
+	}
+	return nil
 }

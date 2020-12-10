@@ -226,3 +226,11 @@ func miCredentialsExists(miCred MiCredential) bool {
 func apimCredentialsExists(apimCred Credential) bool {
 	return apimCred.ClientId != "" && apimCred.ClientSecret != "" && apimCred.Username != "" && apimCred.Password != ""
 }
+
+func onlyMICredentials(apimCred Credential) bool {
+	return apimCred.ClientId == "" && apimCred.ClientSecret == "" && apimCred.Username == "" && apimCred.Password == ""
+}
+
+func onlyAPIMCredentials(miCred MiCredential) bool {
+	return miCred.AccessToken == "" && miCred.Username == "" && miCred.Password == ""
+}
