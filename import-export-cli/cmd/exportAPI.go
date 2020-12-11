@@ -69,7 +69,7 @@ var ExportAPICmd = &cobra.Command{
 	},
 }
 
-func executeExportAPICmd(credential credentials.Credential, exportDirectory string) {
+func executeExportAPICmd(credential credentials.ApimCredential, exportDirectory string) {
 	runningExportApiCommand = true
 	accessToken, preCommandErr := credentials.GetOAuthAccessToken(credential, CmdExportEnvironment)
 

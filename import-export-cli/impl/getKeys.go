@@ -40,7 +40,7 @@ var keyGenEnv string
 var keyGenTokenEndpoint string
 
 //Subscribe the given API or API Product to the default application and generate an access token
-func GetKeys(cred credentials.Credential, envName, name, version, provider, tokenEndpoint string) {
+func GetKeys(cred credentials.ApimCredential, envName, name, version, provider, tokenEndpoint string) {
 	keyGenEnv = envName
 	apiName = name
 	apiVersion = version
@@ -216,7 +216,7 @@ func getApplicationThrottlingPolicy(accessToken string) (string, error) {
 // Calling DCR endpoint
 // @param credential : Username and Password
 // @return client_id, client_secret, error
-func CallDCREndpoint(credential credentials.Credential, keyGenEnv string) (string, string, error) {
+func CallDCREndpoint(credential credentials.ApimCredential, keyGenEnv string) (string, string, error) {
 	//Base64 encoding the credentials
 	b64encodedCredentials := credentials.GetBasicAuth(credential)
 	//Prepping the headers

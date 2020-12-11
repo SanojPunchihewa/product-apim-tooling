@@ -71,7 +71,7 @@ var apiProductsCmdDeprecated = &cobra.Command{
 	},
 }
 
-func executeApiProductsCmd(credential credentials.Credential) {
+func executeApiProductsCmd(credential credentials.ApimCredential) {
 	accessToken, err := credentials.GetOAuthAccessToken(credential, listApiProductsCmdEnvironment)
 	if err != nil {
 		utils.Logln(utils.LogPrefixError + "calling 'list' " + err.Error())

@@ -31,8 +31,8 @@ import (
 // DefaultConfigFile name
 var DefaultConfigFile = "keys.json"
 
-// Credential for storing apim user details
-type Credential struct {
+// ApimCredential for storing apim user details
+type ApimCredential struct {
 	// Username of user
 	Username string `json:"username"`
 	// Password of user
@@ -53,8 +53,8 @@ type Credentials struct {
 
 // Environment containing credentials of apim and mi
 type Environment struct {
-	APIM Credential   `json:"apim"`
-	MI   MiCredential `json:"mi"`
+	APIM ApimCredential `json:"apim"`
+	MI   MiCredential   `json:"mi"`
 }
 
 // GetCredentialStore from file
@@ -75,7 +75,7 @@ func GetDefaultCredentialStore() (Store, error) {
 }
 
 // GetOAuthAccessToken generates an accesstoken for CLI
-func GetOAuthAccessToken(credential Credential, env string) (string, error) {
+func GetOAuthAccessToken(credential ApimCredential, env string) (string, error) {
 	tokenEndpoint := utils.GetInternalTokenEndpointOfEnv(env, utils.MainConfigFilePath)
 	data, err := utils.GetOAuthTokens(credential.Username, credential.Password,
 		Base64Encode(credential.ClientId+":"+credential.ClientSecret),
@@ -90,12 +90,12 @@ func GetOAuthAccessToken(credential Credential, env string) (string, error) {
 }
 
 // GetBasicAuth returns basic auth username:password encoded in base64
-func GetBasicAuth(credential Credential) string {
+func GetBasicAuth(credential ApimCredential) string {
 	return Base64Encode(fmt.Sprintf("%s:%s", credential.Username, credential.Password))
 }
 
 //Revoke access Token when user is logging out from environment
-func RevokeAccessToken(credential Credential, env string, token string) error {
+func RevokeAccessToken(credential ApimCredential, env string, token string) error {
 
 	//get revoke endpoint
 	tokenRevokeEndpoint := utils.GetTokenRevokeEndpoint(env, utils.MainConfigFilePath)

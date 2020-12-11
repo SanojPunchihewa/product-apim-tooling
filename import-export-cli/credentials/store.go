@@ -22,7 +22,7 @@ type Store interface {
 	// Has an env in the store
 	Has(env string) bool
 	// Get an env from store returns intended Credential or an error
-	Get(env string) (Credential, error)
+	Get(env string) (ApimCredential, error)
 	// Get an env from store returns intended Credential or an error
 	GetMICredentials(env string) (MiCredential, error)
 	// Set credentials for env using given username,password,clientId,clientSecret

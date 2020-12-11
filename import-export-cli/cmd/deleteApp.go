@@ -59,7 +59,7 @@ var DeleteAppCmd = &cobra.Command{
 }
 
 // executeDeleteAppCmd executes the delete app command
-func executeDeleteAppCmd(credential credentials.Credential) {
+func executeDeleteAppCmd(credential credentials.ApimCredential) {
 	accessToken, preCommandErr := credentials.GetOAuthAccessToken(credential, deleteAppEnvironment)
 	if preCommandErr == nil {
 		if deleteAppOwner == "" {

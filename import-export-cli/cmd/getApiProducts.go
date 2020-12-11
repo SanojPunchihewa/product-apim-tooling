@@ -69,7 +69,7 @@ var getApiProductsCmd = &cobra.Command{
 	},
 }
 
-func executeGetApiProductsCmd(credential credentials.Credential) {
+func executeGetApiProductsCmd(credential credentials.ApimCredential) {
 	accessToken, err := credentials.GetOAuthAccessToken(credential, getApiProductsCmdEnvironment)
 	if err != nil {
 		utils.Logln(utils.LogPrefixError + "calling 'list' " + err.Error())

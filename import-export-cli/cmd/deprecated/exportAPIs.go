@@ -66,7 +66,7 @@ var ExportAPIsCmdDeprecated = &cobra.Command{
 // Do operations to export APIs for the migration into the directory passed as exportDirectory
 // <export_directory> is the patch defined in main_config.yaml
 // exportDirectory = <export_directory>/migration/
-func executeExportAPIsCmd(credential credentials.Credential, exportDirectory string) {
+func executeExportAPIsCmd(credential credentials.ApimCredential, exportDirectory string) {
 	//create dir structure
 	apiExportDir := impl.CreateExportAPIsDirStructure(exportDirectory, cmd.CmdResourceTenantDomain, cmd.CmdExportEnvironment, cmd.CmdForceStartFromBegin)
 	exportRelatedFilesPath := filepath.Join(exportDirectory, cmd.CmdExportEnvironment,

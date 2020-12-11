@@ -79,37 +79,37 @@ func (s *JsonStore) persist() error {
 	return nil
 }
 
-// Get credential for env
-func (s *JsonStore) Get(env string) (Credential, error) {
+// GetAPIMCredentials returns credentials for apim from the store or an error
+func (s *JsonStore) Get(env string) (ApimCredential, error) {
 	if environment, ok := s.credentials.Environments[env]; ok {
 		username, err := Base64Decode(environment.APIM.Username)
 		if err != nil {
-			return Credential{}, err
+			return ApimCredential{}, err
 		}
 		password, err := Base64Decode(environment.APIM.Password)
 		if err != nil {
-			return Credential{}, err
+			return ApimCredential{}, err
 		}
 		clientID, err := Base64Decode(environment.APIM.ClientId)
 		if err != nil {
-			return Credential{}, err
+			return ApimCredential{}, err
 		}
 		clientSecret, err := Base64Decode(environment.APIM.ClientSecret)
 		if err != nil {
-			return Credential{}, err
+			return ApimCredential{}, err
 		}
-		credential := Credential{
+		credential := ApimCredential{
 			username, password, clientID, clientSecret,
 		}
 		return credential, nil
 	}
-	return Credential{}, fmt.Errorf("credentials not found for APIM in %s, use login", env)
+	return ApimCredential{}, fmt.Errorf("credentials not found for APIM in %s, use login", env)
 }
 
 // Set credentials for env using username, password, clientId, clientSecret
 func (s *JsonStore) Set(env, username, password, clientId, clientSecret string) error {
 	environment := s.credentials.Environments[env]
-	environment.APIM = Credential{
+	environment.APIM = ApimCredential{
 		Username:     Base64Encode(username),
 		Password:     Base64Encode(password),
 		ClientId:     Base64Encode(clientId),
@@ -173,7 +173,8 @@ func (s *JsonStore) Erase(env string) error {
 	if onlyAPIMCredentials(environment.MI) {
 		delete(s.credentials.Environments, env)
 	} else {
-		environment.APIM = Credential{}
+		// remove only apim credentials
+		environment.APIM = ApimCredential{}
 		s.credentials.Environments[env] = environment
 	}
 	return s.persist()
@@ -205,7 +206,7 @@ func (s *JsonStore) Has(env string) bool {
 	return ok
 }
 
-func onlyMICredentials(apimCred Credential) bool {
+func onlyMICredentials(apimCred ApimCredential) bool {
 	return apimCred.ClientId == "" && apimCred.ClientSecret == "" && apimCred.Username == "" && apimCred.Password == ""
 }
 

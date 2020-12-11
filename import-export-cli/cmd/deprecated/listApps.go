@@ -67,7 +67,7 @@ var appsCmdDeprected = &cobra.Command{
 	},
 }
 
-func executeAppsCmd(credential credentials.Credential, appOwner string) {
+func executeAppsCmd(credential credentials.ApimCredential, appOwner string) {
 	accessToken, err := credentials.GetOAuthAccessToken(credential, listAppsCmdEnvironment)
 	if err != nil {
 		utils.Logln(utils.LogPrefixError + "calling 'list' " + err.Error())

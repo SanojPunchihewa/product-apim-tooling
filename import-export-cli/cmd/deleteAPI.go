@@ -68,7 +68,7 @@ var DeleteAPICmd = &cobra.Command{
 }
 
 // executeDeleteAPICmd executes the delete api command
-func executeDeleteAPICmd(credential credentials.Credential) {
+func executeDeleteAPICmd(credential credentials.ApimCredential) {
 	accessToken, preCommandErr := credentials.GetOAuthAccessToken(credential, deleteAPIEnvironment)
 	if preCommandErr == nil {
 		resp, err := impl.DeleteAPI(accessToken, deleteAPIEnvironment, deleteAPIName, deleteAPIVersion, deleteAPIProvider)

@@ -66,7 +66,7 @@ var ExportAppCmdDeprecated = &cobra.Command{
 	},
 }
 
-func executeExportAppCmd(credential credentials.Credential, appsExportDirectoryPath string) {
+func executeExportAppCmd(credential credentials.ApimCredential, appsExportDirectoryPath string) {
 	accessToken, preCommandErr := credentials.GetOAuthAccessToken(credential, cmd.CmdExportEnvironment)
 
 	if preCommandErr == nil {

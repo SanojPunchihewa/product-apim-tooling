@@ -197,11 +197,11 @@ func runAPIMLogin(store credentials.Store, environment, username, password strin
 }
 
 // GetCredentials functions get the credentials for the specified environment
-func GetCredentials(env string) (credentials.Credential, error) {
+func GetCredentials(env string) (credentials.ApimCredential, error) {
 	// get tokens or login
 	store, err := credentials.GetDefaultCredentialStore()
 	if err != nil {
-		return credentials.Credential{}, err
+		return credentials.ApimCredential{}, err
 	}
 
 	if !utils.APIMExistsInEnv(env, utils.MainConfigFilePath) {
@@ -216,13 +216,13 @@ func GetCredentials(env string) (credentials.Credential, error) {
 
 		err = runAPIMLogin(store, env, "", "")
 		if err != nil {
-			return credentials.Credential{}, err
+			return credentials.ApimCredential{}, err
 		}
 		fmt.Println()
 	}
 	cred, err := store.Get(env)
 	if err != nil {
-		return credentials.Credential{}, err
+		return credentials.ApimCredential{}, err
 	}
 	return cred, nil
 }

@@ -65,7 +65,7 @@ var getAppsCmd = &cobra.Command{
 	},
 }
 
-func executeGetAppsCmd(credential credentials.Credential, appOwner string) {
+func executeGetAppsCmd(credential credentials.ApimCredential, appOwner string) {
 	accessToken, err := credentials.GetOAuthAccessToken(credential, getAppsCmdEnvironment)
 	if err != nil {
 		utils.Logln(utils.LogPrefixError + "calling 'list' " + err.Error())

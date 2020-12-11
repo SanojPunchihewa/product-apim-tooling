@@ -64,7 +64,7 @@ var ExportAppCmd = &cobra.Command{
 	},
 }
 
-func executeExportAppCmd(credential credentials.Credential, appsExportDirectoryPath string) {
+func executeExportAppCmd(credential credentials.ApimCredential, appsExportDirectoryPath string) {
 	accessToken, preCommandErr := credentials.GetOAuthAccessToken(credential, CmdExportEnvironment)
 
 	if preCommandErr == nil {

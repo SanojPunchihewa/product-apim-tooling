@@ -71,7 +71,7 @@ var apisCmdDeprecated = &cobra.Command{
 	},
 }
 
-func executeApisCmd(credential credentials.Credential) {
+func executeApisCmd(credential credentials.ApimCredential) {
 	accessToken, err := credentials.GetOAuthAccessToken(credential, listApisCmdEnvironment)
 	if err != nil {
 		utils.Logln(utils.LogPrefixError + "calling 'list' " + err.Error())

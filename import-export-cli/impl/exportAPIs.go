@@ -40,7 +40,7 @@ var startingApiIndexFromList int
 var mainConfigFilePath string
 
 //  Prepare resumption of previous-halted export-apis operation
-func PrepareResumption(credential credentials.Credential, exportRelatedFilesPath, cmdResourceTenantDomain, cmdUsername, cmdExportEnvironment string) {
+func PrepareResumption(credential credentials.ApimCredential, exportRelatedFilesPath, cmdResourceTenantDomain, cmdUsername, cmdExportEnvironment string) {
 	var lastSuceededAPI utils.API
 	lastSuceededAPI = utils.ReadLastSucceededAPIFileData(exportRelatedFilesPath)
 	var migrationApisExportMetadata utils.MigrationApisExportMetadata
@@ -75,7 +75,7 @@ func PrepareResumption(credential credentials.Credential, exportRelatedFilesPath
 
 // Delete directories where the APIs are exported, reset the indexes, get first API list and write the
 // migration-apis-export-metadata.yaml file
-func PrepareStartFromBeginning(credential credentials.Credential, exportRelatedFilesPath, cmdResourceTenantDomain, cmdUsername, cmdExportEnvironment string) {
+func PrepareStartFromBeginning(credential credentials.ApimCredential, exportRelatedFilesPath, cmdResourceTenantDomain, cmdUsername, cmdExportEnvironment string) {
 	fmt.Println("Cleaning all the previously exported APIs of the given target tenant, in the given environment if " +
 		"any, and prepare to export APIs from beginning")
 	//cleaning existing old files (if exists) related to exportation
@@ -113,7 +113,7 @@ func getLastSuceededApiIndex(lastSuceededApi utils.API) int {
 }
 
 // Get the list of APIs from the defined offset index, upto the limit of constant value utils.MaxAPIsToExportOnce
-func getAPIList(credential credentials.Credential, cmdExportEnvironment, cmdResourceTenantDomain string) (count int32, apis []utils.API) {
+func getAPIList(credential credentials.ApimCredential, cmdExportEnvironment, cmdResourceTenantDomain string) (count int32, apis []utils.API) {
 	accessToken, preCommandErr := credentials.GetOAuthAccessToken(credential, cmdExportEnvironment)
 	if preCommandErr == nil {
 		apiListEndpoint := utils.GetApiListEndpointOfEnv(cmdExportEnvironment, utils.MainConfigFilePath)
@@ -135,7 +135,7 @@ func getAPIList(credential credentials.Credential, cmdExportEnvironment, cmdReso
 }
 
 // Do the API exportation
-func ExportAPIs(credential credentials.Credential, exportRelatedFilesPath, cmdExportEnvironment, cmdResourceTenantDomain, exportAPIsFormat, cmdUsername, apiExportDir string,
+func ExportAPIs(credential credentials.ApimCredential, exportRelatedFilesPath, cmdExportEnvironment, cmdResourceTenantDomain, exportAPIsFormat, cmdUsername, apiExportDir string,
 	exportAPIPreserveStatus, runningExportApiCommand bool) {
 	if count == 0 {
 		fmt.Println("No APIs available to be exported..!")

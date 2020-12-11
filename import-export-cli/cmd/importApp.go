@@ -62,7 +62,7 @@ var ImportAppCmd = &cobra.Command{
 	},
 }
 
-func executeImportAppCmd(credential credentials.Credential) {
+func executeImportAppCmd(credential credentials.ApimCredential) {
 	accessToken, err := credentials.GetOAuthAccessToken(credential, importAppEnvironment)
 	if err != nil {
 		utils.HandleErrorAndExit("Error getting OAuth Tokens", err)
