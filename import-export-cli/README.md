@@ -1,7 +1,7 @@
 # CLI for Importing and Exporting APIs and Applications and Managing WSO2 Micro Integrator
-## For WSO2 API Manager 3.2.0
+## For WSO2 API Manager 4.0.0
 
-Command Line tool for importing and exporting APIs/Applications between different API Environments of WSO2 API Manager and Managing WSO2 Micro Integrator
+Command Line tool for importing and exporting APIs/Applications/API Products in between different API environments of WSO2 API Manager and managing WSO2 Micro Integrator
 
 ## Getting Started
 
@@ -17,7 +17,7 @@ Command Line tool for importing and exporting APIs/Applications between differen
 - ### Building
     `cd` into `product-apim-tooling/import-export-cli`
     
-    Execute `./build.sh -t apictl.go -v 3.2.0 -f` to build for all platforms.
+    Execute `./build.sh -t apictl.go -v 4.0.0 -f` to build for all platforms.
     
     Created packages will be available at `build/target` directory
 
