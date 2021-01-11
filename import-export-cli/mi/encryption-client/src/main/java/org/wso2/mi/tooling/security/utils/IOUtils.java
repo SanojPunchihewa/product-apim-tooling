@@ -37,7 +37,7 @@ import java.util.Properties;
 
 public class IOUtils {
 
-    private static final String CLI_HOME_PROP = "wso2.mi.cli.home";
+    private static final String CLI_HOME_PROP = "wso2.apictl.home";
 
     /**
      * Get properties defined in file.
@@ -86,7 +86,7 @@ public class IOUtils {
 
         String cliHome = System.getenv(CLI_HOME_PROP);
         File directory = new File(cliHome);
-        File securityDir = new File(directory.getParent() + File.separator + "security");
+        File securityDir = new File(directory + File.separator + "security");
         if (!securityDir.exists() && !securityDir.mkdir()) {
             throw new EncryptionToolException("Failed to create directory in " + securityDir);
         }
