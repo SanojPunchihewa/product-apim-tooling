@@ -87,6 +87,9 @@ else
     echo "Building "$'\e[1m'"${filename^^}:${build_version}"$'\e[0m'" for detected "$'\e[1m'"${platform}"$'\e[0m'" platform..."
 fi
 
+cd mi/encryption-client && mvn clean install -Dproject.version=${build_version}
+cd ../../
+
 for platform in ${platforms}
 do
     split=(${platform//\// })
@@ -110,6 +113,7 @@ do
 
     cp -r "${baseDir}/resources/README.html" $zipdir > /dev/null 2>&1
     cp -r "${baseDir}/LICENSE" $zipdir > /dev/null 2>&1
+    cp -r "${baseDir}/mi/encryption-client/target/encryption-client-$build_version.jar" $zipdir > /dev/null 2>&1
 
     # set destination path for binary
     destination="$zipdir/$output"
