@@ -25,6 +25,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/wso2/product-apim-tooling/import-export-cli/integration/base"
 	"github.com/wso2/product-apim-tooling/import-export-cli/mi/utils/artifactutils"
+	"github.com/wso2/product-apim-tooling/import-export-cli/utils"
 )
 
 const validAPIName = "HealthcareAPI"
@@ -64,7 +65,7 @@ func TestGetAPIsWithInvalidArgs(t *testing.T) {
 func ValidateAPIsList(t *testing.T, config *MiConfig) {
 	t.Helper()
 	output, _ := listArtifacts(t, apisCmd, config)
-	artifactList := config.MIClient.GetArtifactList(&artifactutils.IntegrationAPIList{})
+	artifactList := config.MIClient.GetArtifactList(utils.MiManagementAPIResource, &artifactutils.IntegrationAPIList{})
 	ValidateAPIListEqual(t, output, (artifactList.(*artifactutils.IntegrationAPIList)))
 }
 
@@ -81,7 +82,7 @@ func ValidateAPIListEqual(t *testing.T, apisListFromCtl string, apisList *artifa
 func ValidateAPI(t *testing.T, config *MiConfig, apiName string) {
 	t.Helper()
 	output, _ := getArtifact(t, apisCmd, apiName, config)
-	artifactList := config.MIClient.GetArtifact("apiName", apiName, &artifactutils.IntegrationAPI{})
+	artifactList := config.MIClient.GetArtifact(utils.MiManagementAPIResource, "apiName", apiName, &artifactutils.IntegrationAPI{})
 	ValidateAPIEqual(t, output, (artifactList.(*artifactutils.IntegrationAPI)))
 }
 
