@@ -77,7 +77,7 @@ func (instance *MiRESTClient) GetArtifact(resource, artifactKey, artifactName st
 	return artifactListResponse
 }
 
-func getCommandWithoutSettingEnv(t *testing.T, artifactType string) {
+func execGetCommandWithoutSettingEnv(t *testing.T, artifactType string) {
 	t.Helper()
 	response, _ := base.Execute(t, "mi", "get", artifactType, "-e", "testing")
 	base.GetRowsFromTableResponse(response)
@@ -85,7 +85,7 @@ func getCommandWithoutSettingEnv(t *testing.T, artifactType string) {
 	assert.Contains(t, response, "MI does not exists in testing Add it using add env")
 }
 
-func getCommandWithoutLogin(t *testing.T, artifactType string, config *MiConfig) {
+func execGetCommandWithoutLogin(t *testing.T, artifactType string, config *MiConfig) {
 	t.Helper()
 	base.SetupMIEnv(t, config.MIClient.GetEnvName(), config.MIClient.GetMiURL())
 	response, _ := base.Execute(t, "mi", "get", artifactType, "-e", "testing")
@@ -94,7 +94,7 @@ func getCommandWithoutLogin(t *testing.T, artifactType string, config *MiConfig)
 	assert.Contains(t, response, "Login to MI")
 }
 
-func getCommandWithoutEnvFlag(t *testing.T, artifactType string, config *MiConfig) {
+func execGetCommandWithoutEnvFlag(t *testing.T, artifactType string, config *MiConfig) {
 	t.Helper()
 	base.SetupMIEnv(t, config.MIClient.GetEnvName(), config.MIClient.GetMiURL())
 	base.MILogin(t, "testing", adminUserName, adminPassword)
@@ -104,7 +104,7 @@ func getCommandWithoutEnvFlag(t *testing.T, artifactType string, config *MiConfi
 	assert.Contains(t, response, `required flag(s) "environment" not set`)
 }
 
-func getCommandWithInvalidArgs(t *testing.T, config *MiConfig, required, passed int, args ...string) {
+func execGetCommandWithInvalidArgCount(t *testing.T, config *MiConfig, required, passed int, fixedArgCout bool, args ...string) {
 	t.Helper()
 	base.SetupMIEnv(t, config.MIClient.GetEnvName(), config.MIClient.GetMiURL())
 	base.MILogin(t, "testing", adminUserName, adminPassword)
@@ -114,5 +114,8 @@ func getCommandWithInvalidArgs(t *testing.T, config *MiConfig, required, passed 
 	base.GetRowsFromTableResponse(response)
 	base.Log(response)
 	expected := fmt.Sprintf("accepts at most %v arg(s), received %v", required, passed)
+	if fixedArgCout {
+		expected = fmt.Sprintf("accepts %v arg(s), received %v", required, passed)
+	}
 	assert.Contains(t, response, expected)
 }

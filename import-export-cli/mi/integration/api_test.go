@@ -47,19 +47,19 @@ func TestGetNonExistingAPIByName(t *testing.T) {
 }
 
 func TestGetAPIsWithoutSettingUpEnv(t *testing.T) {
-	getCommandWithoutSettingEnv(t, apisCmd)
+	execGetCommandWithoutSettingEnv(t, apisCmd)
 }
 
 func TestGetAPIsWithoutLogin(t *testing.T) {
-	getCommandWithoutLogin(t, apisCmd, config)
+	execGetCommandWithoutLogin(t, apisCmd, config)
 }
 
 func TestGetAPIsWithoutEnvFlag(t *testing.T) {
-	getCommandWithoutEnvFlag(t, apisCmd, config)
+	execGetCommandWithoutEnvFlag(t, apisCmd, config)
 }
 
 func TestGetAPIsWithInvalidArgs(t *testing.T) {
-	getCommandWithInvalidArgs(t, config, 1, 2, apisCmd, validAPIName, invalidAPIName)
+	execGetCommandWithInvalidArgCount(t, config, 1, 2, false, apisCmd, validAPIName, invalidAPIName)
 }
 
 func ValidateAPIsList(t *testing.T, config *MiConfig) {

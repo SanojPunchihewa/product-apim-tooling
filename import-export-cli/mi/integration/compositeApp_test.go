@@ -47,19 +47,19 @@ func TestGetNonExistingCAppByName(t *testing.T) {
 }
 
 func TestGetCAppsWithoutSettingUpEnv(t *testing.T) {
-	getCommandWithoutSettingEnv(t, cAppCmd)
+	execGetCommandWithoutSettingEnv(t, cAppCmd)
 }
 
 func TestGetCAppsWithoutLogin(t *testing.T) {
-	getCommandWithoutLogin(t, cAppCmd, config)
+	execGetCommandWithoutLogin(t, cAppCmd, config)
 }
 
 func TestGetCAppsWithoutEnvFlag(t *testing.T) {
-	getCommandWithoutEnvFlag(t, cAppCmd, config)
+	execGetCommandWithoutEnvFlag(t, cAppCmd, config)
 }
 
 func TestGetCAppsWithInvalidArgs(t *testing.T) {
-	getCommandWithInvalidArgs(t, config, 1, 2, cAppCmd, validCAppName, invalidCAppName)
+	execGetCommandWithInvalidArgCount(t, config, 1, 2, false, cAppCmd, validCAppName, invalidCAppName)
 }
 
 func ValidateCAppsList(t *testing.T, config *MiConfig) {
